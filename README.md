@@ -17,6 +17,23 @@ its highly suggested to setup a vhost for the apiserver like api.yoursite.org
 there is a proxy server written with raw werkzug, and then a flask api server.
 they both share a sqlite database, so they need to have the same working directory.
 
+## API
+### web
+- `GET /vhost/<vfrom>` get what host `<vfrom>` maps to
+- `PUT /vhost/<vfrom>/<vto>` update or inster mapping from `<vfrom>` to `<vto>`
+- `DELETE /vhost/<vfrom>` remove mapping fro `<vfrom>`
+- `GET /vhost` list all vhost mappings
+### python
+- VHostClient
+  + `__init__(dbname='hostmap.db')`
+  + `get(vfrom)`
+  + `put(vfrom, vto)`
+  + `delete(vfrom)`
+  + `list()` returns all mapings in form of [{vfrom, vto}]
+  + `get_conn()` get connection to database
+  + `get_cursor()`
+  + `commit()`
+
 ## running it/local dev
 - (optional) `virtualenv -p python3 env; source env/bin/activate` make a virtualenv if you want 
 - `python3 stupidproxy.py` starts the proxy and creates the database
